@@ -17,10 +17,10 @@ on:
           - debug
 
 jobs:
-  Update-README:
+  Collect-stats:
     runs-on: ubuntu-latest
 
-    name: Modifiy repository files
+    name: Collect stats
 
     steps:
       - name: Checkout repository
