@@ -1,0 +1,24 @@
+name: Mark stale issues and pull requests
+
+on:
+  schedule:
+  - cron: "0 0 * * *"
+
+jobs:
+  Update-README:
+
+    runs-on: ubuntu-latest
+
+    name: Modifiy repository files
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.2
+
+      - uses: gr2m/org-stats-action@v1.x
+        id: stats
+        with:
+          org: Insights-Tech
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
