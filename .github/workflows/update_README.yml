@@ -32,3 +32,8 @@ jobs:
           org: Insights-Tech
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: |
+          cat << EOF
+          result: ${{ steps.stats.outputs.data }}
+          EOF
