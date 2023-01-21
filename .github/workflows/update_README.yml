@@ -26,14 +26,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2.3.2
 
-      - uses: gr2m/org-stats-action@v1.x
+      - name: Get ORG stats
+        uses: gr2m/org-stats-action@v1.x
         id: stats
         with:
           org: Insights-Tech
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: |
+      - name: Output stats
+        run: |
           cat << EOF
           result: ${{ steps.stats.outputs.data }}
           EOF
+
+      - name: Write stats to csv file
+        uses: gr2m/write-csv-file-action@v1.x
+        with:
+          path: data/octokit.csv
+          columns: open issues,closed issues,open pull requests,closed pull requests,merged pull requests
+          "open issues": ${{ fromJson(steps.stats.outputs.data).openIssues }}
+          "closed issues": ${{ fromJson(steps.stats.outputs.data).closedIssues }}
+          "open pull requests": ${{ fromJson(steps.stats.outputs.data).openPullRequests }}
+          "closed pull requests": ${{ fromJson(steps.stats.outputs.data).closedPullRequests }}
+          "merged pull requests": ${{ fromJson(steps.stats.outputs.data).mergedPullRequests }}
