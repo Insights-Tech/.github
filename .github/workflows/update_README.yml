@@ -34,12 +34,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Output stats
-        run: |
-          cat << EOF
-          result: ${{ steps.stats.outputs.data }}
-          EOF
-
       - name: Write stats to csv file
         uses: gr2m/write-csv-file-action@v1.x
         with:
@@ -50,3 +44,7 @@ jobs:
           "open pull requests": ${{ fromJson(steps.stats.outputs.data).openPullRequests }}
           "closed pull requests": ${{ fromJson(steps.stats.outputs.data).closedPullRequests }}
           "merged pull requests": ${{ fromJson(steps.stats.outputs.data).mergedPullRequests }}
+      
+      - name: Output stats
+        run: |
+          cat data/octokit.csv
